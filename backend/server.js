@@ -8,10 +8,13 @@ const connectDB = require('./config/db');
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
+
+// Await DB connection for serverless
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // CORS — allow all origins (update to your frontend URL in production if needed)
 app.use(cors({
