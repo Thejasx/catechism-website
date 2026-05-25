@@ -13,6 +13,9 @@ import PrayerModal from './components/PrayerModal';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 
+// Use VITE_API_URL env var in production, fallback to localhost for local dev
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function App() {
   const [view, setView] = useState('home'); // 'home' or 'admin'
   const [token, setToken] = useState(localStorage.getItem('adminToken') || null);
@@ -29,10 +32,10 @@ function App() {
   const fetchPublicData = async () => {
     try {
       const [resAnn, resEvt, resGal, resLdr] = await Promise.all([
-        fetch('http://localhost:5000/api/announcements'),
-        fetch('http://localhost:5000/api/events'),
-        fetch('http://localhost:5000/api/gallery'),
-        fetch('http://localhost:5000/api/leaders')
+        fetch(`${API_BASE}/api/announcements`),
+        fetch(`${API_BASE}/api/events`),
+        fetch(`${API_BASE}/api/gallery`),
+        fetch(`${API_BASE}/api/leaders`)
       ]);
 
       const [ann, evt, gal, ldr] = await Promise.all([

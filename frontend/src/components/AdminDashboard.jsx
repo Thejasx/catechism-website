@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE from '../api';
 import { 
   LayoutDashboard, 
   Megaphone, 
@@ -49,12 +50,12 @@ const AdminDashboard = ({ token, onLogout }) => {
       const headers = { 'Authorization': `Bearer ${token}` };
       
       const [resAnn, resEvt, resGal, resLdr, resMsg, resPry] = await Promise.all([
-        fetch('http://localhost:5000/api/announcements'),
-        fetch('http://localhost:5000/api/events'),
-        fetch('http://localhost:5000/api/gallery'),
-        fetch('http://localhost:5000/api/leaders'),
-        fetch('http://localhost:5000/api/messages', { headers }),
-        fetch('http://localhost:5000/api/prayer-requests', { headers })
+        fetch(`${API_BASE}/api/announcements`),
+        fetch(`${API_BASE}/api/events`),
+        fetch(`${API_BASE}/api/gallery`),
+        fetch(`${API_BASE}/api/leaders`),
+        fetch(`${API_BASE}/api/messages`, { headers }),
+        fetch(`${API_BASE}/api/prayer-requests`, { headers })
       ]);
 
       const [ann, evt, gal, ldr, msg, pry] = await Promise.all([
@@ -91,7 +92,7 @@ const AdminDashboard = ({ token, onLogout }) => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/upload', {
+      const res = await fetch(`${API_BASE}/api/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -102,7 +103,7 @@ const AdminDashboard = ({ token, onLogout }) => {
       const data = await res.json();
 
       if (res.ok) {
-        setFormFields(prev => ({ ...prev, imageUrl: `http://localhost:5000${data.imageUrl}` }));
+        setFormFields(prev => ({ ...prev, imageUrl: `${API_BASE}${data.imageUrl}` }));
         setSuccess('Image uploaded successfully!');
         setTimeout(() => setSuccess(''), 3000);
       } else {
@@ -119,7 +120,7 @@ const AdminDashboard = ({ token, onLogout }) => {
   const handleDelete = async (endpoint, id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/${endpoint}/${id}`, {
+      const res = await fetch(`${API_BASE}/api/${endpoint}/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -182,8 +183,8 @@ const AdminDashboard = ({ token, onLogout }) => {
 
     const method = editingItem ? 'PUT' : 'POST';
     const url = editingItem 
-      ? `http://localhost:5000/api/${endpoint}/${editingItem._id}`
-      : `http://localhost:5000/api/${endpoint}`;
+      ? `${API_BASE}/api/${endpoint}/${editingItem._id}`
+      : `${API_BASE}/api/${endpoint}`;
 
     try {
       const res = await fetch(url, {
