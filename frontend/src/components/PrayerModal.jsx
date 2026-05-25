@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_BASE from '../api';
 import { X, Send } from 'lucide-react';
 
 const PrayerModal = ({ isOpen, onClose }) => {
@@ -29,7 +30,7 @@ const PrayerModal = ({ isOpen, onClose }) => {
     setStatus({ type: '', message: '' });
 
     try {
-      const res = await fetch('http://localhost:5000/api/prayer-requests', {
+      const res = await fetch(`${API_BASE}/api/prayer-requests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,3 +1,4 @@
+import API_BASE from '../api';
 import React, { useState } from 'react';
 import { MapPin, Mail, Phone, Clock, MessageSquare, Send } from 'lucide-react';
 
@@ -30,7 +31,7 @@ const ContactSection = () => {
 
     try {
       // Send contact message to backend API
-      const res = await fetch('http://localhost:5000/api/messages', {
+      const res = await fetch(`${API_BASE}/api/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -13,8 +13,7 @@ import PrayerModal from './components/PrayerModal';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 
-// Use VITE_API_URL env var in production, fallback to localhost for local dev
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+import API_BASE from './api';
 
 function App() {
   const [view, setView] = useState('home'); // 'home' or 'admin'
