@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_BASE from '../api';
 import { Lock, User, KeyRound } from 'lucide-react';
 
 const AdminLogin = ({ onLoginSuccess }) => {
