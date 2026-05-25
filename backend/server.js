@@ -13,19 +13,24 @@ connectDB();
 
 const app = express();
 
-// Set up middleware
-app.use(cors());
+// CORS — allow all origins (update to your frontend URL in production if needed)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
-  console.log('Created local /uploads folder.');
+// Create uploads directory only in local dev (Vercel filesystem is read-only)
+try {
+  const uploadsDir = path.join(__dirname, 'uploads');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+  }
+  app.use('/uploads', express.static(uploadsDir));
+} catch (e) {
+  console.log('Uploads directory skipped (serverless env).');
 }
-
-// Serve uploaded image assets statically
-app.use('/uploads', express.static(uploadsDir));
 
 // Route mapping
 app.use('/api/auth', require('./routes/authRoutes'));
@@ -37,14 +42,18 @@ app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/prayer-requests', require('./routes/prayerRequestRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 
-// Root endpoint for testing
+// Root health check
 app.get('/', (req, res) => {
-  res.send('Ernakulam Catechism Unit API is running...');
+  res.json({ message: 'Ernakulam Catechism Unit API is running ✓' });
 });
 
-// Port configuration
-const PORT = process.env.PORT || 5000;
+// Listen only in local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+// Export for Vercel serverless
+module.exports = app;
