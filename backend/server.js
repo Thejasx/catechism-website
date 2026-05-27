@@ -42,6 +42,7 @@ app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/leaders', require('./routes/leaderRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
+app.use('/api/prayer-requests', require('./routes/prayerRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 
 // Root health check
