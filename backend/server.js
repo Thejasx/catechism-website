@@ -43,7 +43,7 @@ app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/leaders', require('./routes/leaderRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/prayer-requests', require('./routes/prayerRoutes'));
-app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use('/api/settings', require('./routes/settingsRoutes'));
 
 // Root health check
 app.get('/', (req, res) => {

@@ -13,8 +13,10 @@ import {
   Trash2, 
   Upload, 
   X, 
-  LogOut 
+  LogOut,
+  Settings
 } from 'lucide-react';
+import SettingsForm from './SettingsForm';
 
 const AdminDashboard = ({ token, onLogout }) => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -266,6 +268,12 @@ const AdminDashboard = ({ token, onLogout }) => {
             onClick={() => { setActiveTab('prayers'); setError(''); setSuccess(''); }}
           >
             <HeartHandshake size={18} /> Prayers ({prayers.length})
+          </li>
+          <li 
+            className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('settings'); setError(''); setSuccess(''); }}
+          >
+            <Settings size={18} /> Site Settings
           </li>
         </nav>
 
@@ -583,6 +591,9 @@ const AdminDashboard = ({ token, onLogout }) => {
             </div>
           </div>
         )}
+          {activeTab === 'settings' && (
+            <SettingsForm token={token} />
+          )}
       </main>
 
       {/* --- FORM EDIT/ADD MODAL --- */}
