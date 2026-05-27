@@ -9,18 +9,15 @@ import GallerySection from './components/GallerySection';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
-import PrayerModal from './components/PrayerModal';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 
-import API_BASE from './api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://catechism-website-brown.vercel.app';
 
 function App() {
   const [view, setView] = useState('home'); // 'home' or 'admin'
   const [token, setToken] = useState(localStorage.getItem('adminToken') || null);
   const [adminUser, setAdminUser] = useState(localStorage.getItem('adminUser') || '');
-  const [prayerModalOpen, setPrayerModalOpen] = useState(false);
-
   // Dynamic Landing Page Data
   const [announcements, setAnnouncements] = useState([]);
   const [events, setEvents] = useState([]);
@@ -115,7 +112,6 @@ function App() {
       
       {/* Header (Shows in both views, toggles layout slightly) */}
       <Header 
-        onOpenPrayerModal={() => setPrayerModalOpen(true)} 
         onToggleAdmin={handleToggleAdmin}
         isAdminLoggedIn={!!token}
         currentView={view}
@@ -149,12 +145,12 @@ function App() {
             <EventsSection events={events} />
           </div>
           
-          <div className="reveal">
-            <GallerySection galleryItems={galleryItems} />
-          </div>
-          
           <div className="reveal-left">
             <AboutSection />
+          </div>
+
+          <div className="reveal">
+            <GallerySection galleryItems={galleryItems} />
           </div>
           
           <div className="reveal">
@@ -166,18 +162,11 @@ function App() {
       {/* Footer (Shows on public website) */}
       {view !== 'admin' && (
         <Footer 
-          onOpenPrayerModal={() => setPrayerModalOpen(true)}
           onToggleAdmin={handleToggleAdmin}
           isAdminLoggedIn={!!token}
           currentView={view}
         />
       )}
-
-      {/* Prayer Modal Popup overlay */}
-      <PrayerModal 
-        isOpen={prayerModalOpen} 
-        onClose={() => setPrayerModalOpen(false)} 
-      />
 
     </div>
   );

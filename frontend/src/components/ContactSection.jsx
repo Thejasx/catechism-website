@@ -76,7 +76,7 @@ const ContactSection = () => {
               </div>
               <div className="contact-info-text">
                 <h4>Our Location</h4>
-                <p>Ernakulam Catechism Unit<br />St. Mary's Church, Ernakulam<br />Kerala, India - 682031</p>
+                <p>Thiruhrudayakunnu Catechism Family<br />St. Mary's Church, Ernakulam<br />Kerala, India - 682031</p>
               </div>
             </div>
 
@@ -180,15 +180,20 @@ const ContactSection = () => {
             </form>
           </div>
 
-          {/* Map Column */}
-          <div className="contact-map-wrapper">
-            <iframe 
-              title="St Marys Church Ernakulam" 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.0881958210344!2d76.2741126759714!3d9.976451673418876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d4400000001%3A0x86774e1d7cf9d1a!2sSt.%20Mary&#39;s%20Cathedral%20Basilica%2C%20Ernakulam!5e0!3m2!1sen!2sin!4v1716616089764!5m2!1sen!2sin" 
-              allowFullScreen="" 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+          <div className="contact-map-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', borderRadius: '8px', padding: '20px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <MapPin size={48} style={{ color: 'var(--primary)', marginBottom: '10px' }} />
+              <h3>Find Us on Google Maps</h3>
+              <p style={{ margin: '15px 0' }}>Click the link below to open our location in Google Maps.</p>
+              <a 
+                href="https://maps.app.goo.gl/QmCCi8aNxfpgogXq5" 
+                target="_blank" 
+                rel="noreferrer"
+                className="btn btn-primary"
+              >
+                Open Map Link
+              </a>
+            </div>
           </div>
         </div>
       </div>

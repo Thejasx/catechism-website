@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.png';
 import { 
   Menu, 
   X, 
@@ -30,14 +31,6 @@ const Header = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
             "Let the little children come to me, and do not hinder them, for the kingdom of heaven belongs to such as these." – Matthew 19:14
           </div>
           <div className="top-bar-links">
-            <button onClick={onOpenPrayerModal} className="top-bar-link">
-              <HeartHandshake size={14} className="text-secondary" />
-              Prayer Request
-            </button>
-            <a href="#contact" className="top-bar-link">
-              <User size={14} className="text-secondary" />
-              Join Us
-            </a>
             <button onClick={onToggleAdmin} className="top-bar-link">
               <LogIn size={14} className="text-secondary" />
               {currentView === 'admin' ? 'Exit Admin' : isAdminLoggedIn ? 'Admin Panel' : 'Admin Login'}
@@ -57,12 +50,12 @@ const Header = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
         <div className="container nav-container">
           {/* Logo */}
           <a href="#home" className="logo" onClick={currentView === 'admin' ? onToggleAdmin : undefined}>
-            <div className="logo-icon-container">
-              <span style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'serif' }}>†</span>
+            <div className="logo-icon-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'transparent', border: 'none' }}>
+              <img src={logo} alt="Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
             </div>
             <div className="logo-text">
-              <h1>ERNAKULAM CATECHISM UNIT</h1>
-              <p>CHURCH • CATECHISM FAMILY</p>
+              <h1 style={{ fontSize: '1.2rem' }}>THIRUHRUDAYAKUNNU CATECHISM FAMILY</h1>
+              <p>DIOCESE ERNAKULAM-ANGAMALI</p>
             </div>
           </a>
 
@@ -81,12 +74,7 @@ const Header = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
 
           {/* Desktop Call to Actions */}
           <div className="nav-actions">
-            <button onClick={onOpenPrayerModal} className="btn btn-secondary btn-gold" style={{ borderRadius: '4px' }}>
-              Prayer Request
-            </button>
-            <a href="#contact" className="btn btn-primary btn-gold" style={{ borderRadius: '4px', backgroundColor: '#3c1e69', color: '#fff', borderColor: '#3c1e69' }}>
-              Join Us
-            </a>
+            {/* Call to actions removed as requested */}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -123,24 +111,7 @@ const Header = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
           ))}
         </ul>
         <div className="mobile-nav-actions">
-          <button 
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenPrayerModal();
-            }} 
-            className="btn btn-secondary btn-gold"
-            style={{ width: '100%', borderRadius: '4px' }}
-          >
-            Prayer Request
-          </button>
-          <a 
-            href="#contact" 
-            className="btn btn-primary btn-gold"
-            onClick={() => setMobileMenuOpen(false)}
-            style={{ width: '100%', textAlign: 'center', borderRadius: '4px', backgroundColor: '#3c1e69', color: '#fff', borderColor: '#3c1e69' }}
-          >
-            Join Us
-          </a>
+          {/* Mobile actions removed as requested */}
         </div>
       </div>
     </>

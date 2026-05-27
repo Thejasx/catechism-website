@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/logo.png';
 import { Heart } from 'lucide-react';
 
 const Footer = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView }) => {
@@ -8,12 +9,12 @@ const Footer = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
         {/* Branding Column */}
         <div className="footer-info">
           <div className="footer-logo">
-            <div className="footer-logo-icon">
-              <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>†</span>
+            <div className="logo-icon-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'transparent', border: 'none' }}>
+              <img src={logo} alt="Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
             </div>
             <div>
-              <h2>ERNAKULAM CATECHISM UNIT</h2>
-              <p>CHURCH • CATECHISM FAMILY</p>
+              <h2 style={{ fontSize: '1.2rem' }}>THIRUHRUDAYAKUNNU CATECHISM FAMILY</h2>
+              <p>DIOCESE ERNAKULAM-ANGAMALI</p>
             </div>
           </div>
           <p className="footer-info-text">
@@ -45,8 +46,6 @@ const Footer = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
           <h3>Useful Links</h3>
           <ul className="footer-links">
             <li><a href="#announcements">Announcements</a></li>
-            <li><button onClick={onOpenPrayerModal} style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>Prayer Request</button></li>
-            <li><a href="#contact">Join Us</a></li>
             <li>
               <button 
                 onClick={onToggleAdmin} 
@@ -77,7 +76,7 @@ const Footer = ({ onOpenPrayerModal, onToggleAdmin, isAdminLoggedIn, currentView
       </div>
 
       <div className="container footer-bottom">
-        <p>© 2026 Ernakulam Catechism Unit. All Rights Reserved.</p>
+        <p>© 2026 Thiruhrudayakunnu Catechism Family. All Rights Reserved.</p>
         <p style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           Designed with <Heart size={12} className="text-secondary" style={{ fill: 'var(--secondary)' }} /> for God's Glory
         </p>
