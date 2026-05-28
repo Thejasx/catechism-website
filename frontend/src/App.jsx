@@ -23,25 +23,28 @@ function App() {
   const [events, setEvents] = useState([]);
   const [galleryItems, setGalleryItems] = useState([]);
   const [leaders, setLeaders] = useState([]);
+  const [siteSettings, setSiteSettings] = useState(null);
 
   // Fetch Public Data
   const fetchPublicData = async () => {
     try {
-      const [resAnn, resEvt, resGal, resLdr] = await Promise.all([
+      const [resAnn, resEvt, resGal, resLdr, resSettings] = await Promise.all([
         fetch(`${API_BASE}/api/announcements`),
         fetch(`${API_BASE}/api/events`),
         fetch(`${API_BASE}/api/gallery`),
-        fetch(`${API_BASE}/api/leaders`)
+        fetch(`${API_BASE}/api/leaders`),
+        fetch(`${API_BASE}/api/settings`)
       ]);
 
-      const [ann, evt, gal, ldr] = await Promise.all([
-        resAnn.json(), resEvt.json(), resGal.json(), resLdr.json()
+      const [ann, evt, gal, ldr, settings] = await Promise.all([
+        resAnn.json(), resEvt.json(), resGal.json(), resLdr.json(), resSettings.json()
       ]);
 
       if (Array.isArray(ann)) setAnnouncements(ann);
       if (Array.isArray(evt)) setEvents(evt);
       if (Array.isArray(gal)) setGalleryItems(gal);
       if (Array.isArray(ldr)) setLeaders(ldr);
+      if (settings && settings._id) setSiteSettings(settings);
 
     } catch (err) {
       console.error('Failed to load landing page data:', err);
@@ -130,7 +133,7 @@ function App() {
           <Hero />
           
           <div className="reveal">
-            <Stats />
+            <Stats siteSettings={siteSettings} />
           </div>
           
           <div className="reveal-left">
@@ -154,7 +157,7 @@ function App() {
           </div>
           
           <div className="reveal">
-            <ContactSection />
+            <ContactSection siteSettings={siteSettings} />
           </div>
         </main>
       )}
@@ -165,6 +168,7 @@ function App() {
           onToggleAdmin={handleToggleAdmin}
           isAdminLoggedIn={!!token}
           currentView={view}
+          siteSettings={siteSettings}
         />
       )}
 

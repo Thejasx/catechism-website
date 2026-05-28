@@ -2,7 +2,7 @@ import API_BASE from '../api';
 import React, { useState } from 'react';
 import { MapPin, Mail, Phone, Clock, MessageSquare, Send } from 'lucide-react';
 
-const ContactSection = () => {
+const ContactSection = ({ siteSettings }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,6 +11,17 @@ const ContactSection = () => {
   });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
+
+  // Use dynamic contact info from site settings, with fallbacks
+  const contactInfo = siteSettings?.contactInfo || {};
+  const location = contactInfo.location || 'Thiruhrudayakunnu Catechism Family\nSt. Mary\'s Church, Ernakulam\nKerala, India - 682031';
+  const emailPrimary = contactInfo.emailPrimary || '';
+  const emailSecondary = contactInfo.emailSecondary || '';
+  const phonePrimary = contactInfo.phonePrimary || '';
+  const phoneSecondary = contactInfo.phoneSecondary || '';
+  const officeTime = contactInfo.officeTime || '';
+  const whatsapp = contactInfo.whatsapp || '';
+  const mapLink = contactInfo.mapLink || '';
 
   const handleChange = (e) => {
     setFormData({
@@ -55,8 +66,10 @@ const ContactSection = () => {
   };
 
   const handleWhatsAppRedirect = () => {
-    // Open WhatsApp Chat link
-    window.open('https://wa.me/919876543210?text=Hi,%20I%20have%20a%20query%20regarding%20Ernakulam%20Catechism%20classes.', '_blank');
+    const waNumber = whatsapp.replace(/[^0-9]/g, '');
+    if (waNumber) {
+      window.open(`https://wa.me/${waNumber}?text=Hi,%20I%20have%20a%20query%20regarding%20Ernakulam%20Catechism%20classes.`, '_blank');
+    }
   };
 
   return (
@@ -70,50 +83,60 @@ const ContactSection = () => {
         <div className="contact-grid">
           {/* Info Blocks Column */}
           <div className="contact-info">
-            <div className="contact-info-block">
-              <div className="contact-info-icon">
-                <MapPin size={18} />
+            {location && (
+              <div className="contact-info-block">
+                <div className="contact-info-icon">
+                  <MapPin size={18} />
+                </div>
+                <div className="contact-info-text">
+                  <h4>Our Location</h4>
+                  <p>{location}</p>
+                </div>
               </div>
-              <div className="contact-info-text">
-                <h4>Our Location</h4>
-                <p>Thiruhrudayakunnu Catechism Family<br />St. Mary's Church, Ernakulam<br />Kerala, India - 682031</p>
-              </div>
-            </div>
+            )}
 
-            <div className="contact-info-block">
-              <div className="contact-info-icon">
-                <Mail size={18} />
+            {(emailPrimary || emailSecondary) && (
+              <div className="contact-info-block">
+                <div className="contact-info-icon">
+                  <Mail size={18} />
+                </div>
+                <div className="contact-info-text">
+                  <h4>Email Us</h4>
+                  <p>{emailPrimary}{emailPrimary && emailSecondary && <br />}{emailSecondary}</p>
+                </div>
               </div>
-              <div className="contact-info-text">
-                <h4>Email Us</h4>
-                <p>catechism@ernakulamchurch.in<br />info@ernakulamchurch.in</p>
-              </div>
-            </div>
+            )}
 
-            <div className="contact-info-block">
-              <div className="contact-info-icon">
-                <Phone size={18} />
+            {(phonePrimary || phoneSecondary) && (
+              <div className="contact-info-block">
+                <div className="contact-info-icon">
+                  <Phone size={18} />
+                </div>
+                <div className="contact-info-text">
+                  <h4>Call Us</h4>
+                  <p>{phonePrimary}{phonePrimary && phoneSecondary && <br />}{phoneSecondary}</p>
+                </div>
               </div>
-              <div className="contact-info-text">
-                <h4>Call Us</h4>
-                <p>+91 98765 43210<br />+91 98765 43211</p>
-              </div>
-            </div>
+            )}
 
-            <div className="contact-info-block">
-              <div className="contact-info-icon">
-                <Clock size={18} />
+            {officeTime && (
+              <div className="contact-info-block">
+                <div className="contact-info-icon">
+                  <Clock size={18} />
+                </div>
+                <div className="contact-info-text">
+                  <h4>Office Time</h4>
+                  <p>{officeTime}</p>
+                </div>
               </div>
-              <div className="contact-info-text">
-                <h4>Office Time</h4>
-                <p>Monday - Saturday: 9:00 AM - 5:00 PM<br />Sunday: 8:00 AM - 1:00 PM</p>
-              </div>
-            </div>
+            )}
 
-            <button onClick={handleWhatsAppRedirect} className="whatsapp-btn">
-              <MessageSquare size={18} />
-              Chat on WhatsApp
-            </button>
+            {whatsapp && (
+              <button onClick={handleWhatsAppRedirect} className="whatsapp-btn">
+                <MessageSquare size={18} />
+                Chat on WhatsApp
+              </button>
+            )}
           </div>
 
           {/* Contact Form Column */}
@@ -180,21 +203,23 @@ const ContactSection = () => {
             </form>
           </div>
 
-          <div className="contact-map-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', borderRadius: '8px', padding: '20px' }}>
-            <div style={{ textAlign: 'center' }}>
-              <MapPin size={48} style={{ color: 'var(--primary)', marginBottom: '10px' }} />
-              <h3>Find Us on Google Maps</h3>
-              <p style={{ margin: '15px 0' }}>Click the link below to open our location in Google Maps.</p>
-              <a 
-                href="https://maps.app.goo.gl/QmCCi8aNxfpgogXq5" 
-                target="_blank" 
-                rel="noreferrer"
-                className="btn btn-primary"
-              >
-                Open Map Link
-              </a>
+          {mapLink && (
+            <div className="contact-map-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', borderRadius: '8px', padding: '20px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <MapPin size={48} style={{ color: 'var(--primary)', marginBottom: '10px' }} />
+                <h3>Find Us on Google Maps</h3>
+                <p style={{ margin: '15px 0' }}>Click the link below to open our location in Google Maps.</p>
+                <a 
+                  href={mapLink} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="btn btn-primary"
+                >
+                  Open Map Link
+                </a>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
