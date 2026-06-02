@@ -105,7 +105,11 @@ const AdminDashboard = ({ token, onLogout }) => {
       const data = await res.json();
 
       if (res.ok) {
-        setFormFields(prev => ({ ...prev, imageUrl: `${API_BASE}${data.imageUrl}` }));
+        // data URIs and absolute URLs are used as-is; only prepend API_BASE for relative paths
+        const finalUrl = data.imageUrl.startsWith('data:') || data.imageUrl.startsWith('http')
+          ? data.imageUrl
+          : `${API_BASE}${data.imageUrl}`;
+        setFormFields(prev => ({ ...prev, imageUrl: finalUrl }));
         setSuccess('Image uploaded successfully!');
         setTimeout(() => setSuccess(''), 3000);
       } else {

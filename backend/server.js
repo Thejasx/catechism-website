@@ -22,7 +22,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // Create uploads directory only in local dev (Vercel filesystem is read-only)
 try {
@@ -44,6 +44,7 @@ app.use('/api/leaders', require('./routes/leaderRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/prayer-requests', require('./routes/prayerRoutes'));
 app.use('/api/settings', require('./routes/settingsRoutes'));
+app.use('/api/upload', require('./routes/uploadRoutes'));
 
 // Root health check
 app.get('/', (req, res) => {
